@@ -1,9 +1,9 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
-import { extname, join, normalize } from 'node:path';
+import { extname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = fileURLToPath(new URL('.', import.meta.url));
+const root = resolve(fileURLToPath(new URL('.', import.meta.url)));
 const port = Number(process.env.PORT || 4173);
 const types = {
   '.html': 'text/html; charset=utf-8',
@@ -18,10 +18,15 @@ const types = {
 createServer(async (request, response) => {
   try {
     const url = new URL(request.url || '/', 'http://' + (request.headers.host || 'localhost'));
-    const requested = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
-    const filePath = normalize(join(root, requested));
-    if (!filePath.startsWith(root)) {
+    const requested = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname).replace(/\\/g, '/');
+    const filePath = resolve(root, '.' + requested);
+    const relativePath = relative(root, filePath);
+    if (relativePath === '..' || relativePath.startsWith('..' + sep) || isAbsolute(relativePath)) {
       response.writeHead(403).end('Forbidden');
+      return;
+    }
+    if (relativePath.split(sep).some((part) => part === '.git' || part === 'node_modules' || part === '.env')) {
+      response.writeHead(404).end('Not found');
       return;
     }
     const fileStat = await stat(filePath);
