@@ -1,0 +1,8 @@
+{
+  "name": "pace-study-planner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A thoughtful, local-first exam preparation planner.",
+  "scripts": { "start": "node server.mjs" },
+  "engines": { "node": ">=18" }
+}

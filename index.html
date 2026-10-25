@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8fc" />
+    <meta name="description" content="Pace helps you turn upcoming exams into a calm, manageable study plan." />
+    <title>Pace — Exam prep, under control</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%235b65e8'/%3E%3Cpath d='M18 18h14c10 0 16 5 16 14s-6 14-16 14h-4v-9h4c4 0 6-2 6-5s-2-5-6-5h-4v26H18z' fill='white'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="Pace home"><span class="brand-mark">p</span><span>Pace</span></a>
+        <nav class="nav-list">
+          <button class="nav-item is-active" data-view-target="overview"><span class="nav-icon">◫</span>Overview</button>
+          <button class="nav-item" data-view-target="planner"><span class="nav-icon">▤</span>Study planner</button>
+          <button class="nav-item" data-view-target="exams"><span class="nav-icon">▣</span>My exams</button>
+          <button class="nav-item" data-view-target="insights"><span class="nav-icon">⌁</span>Insights</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="side-note"><span class="side-note-icon">✦</span><div><strong>Small steps add up.</strong><p>Your next session is all that matters.</p></div></div>
+          <button class="profile-button" data-action="reset-demo"><span class="avatar">P</span><span class="profile-copy"><strong>Personal workspace</strong><small>Saved on this device</small></span><span class="profile-more">···</span></button>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar"><button class="mobile-brand" data-view-target="overview"><span class="brand-mark">p</span> Pace</button><div class="topbar-spacer"></div><span class="today-label" id="today-label"></span><button class="icon-button" aria-label="Help" data-action="help">?</button><span class="top-avatar">A</span></header>
+
+        <section class="view is-visible" id="view-overview" data-view="overview" aria-labelledby="overview-title">
+          <div class="page-heading"><div><p class="eyebrow" id="greeting-label">YOUR STUDY SPACE</p><h1 id="overview-title">A little progress goes a long way.</h1><p class="page-subtitle">Here’s your plan for today. Keep it steady, and you’ll get there.</p></div><button class="button button-primary" data-action="open-exam-modal"><span>＋</span> Add an exam</button></div>
+          <div class="metrics-grid" id="metrics-grid"></div>
+          <div class="dashboard-grid">
+            <div class="dashboard-main">
+              <section class="panel today-panel"><div class="panel-heading"><div><p class="eyebrow">YOUR DAY</p><h2>Today’s focus</h2></div><button class="text-button" data-view-target="planner">View full plan <span>→</span></button></div><div id="today-sessions" class="session-list"></div></section>
+              <section class="panel week-panel"><div class="panel-heading"><div><p class="eyebrow">A GENTLE RHYTHM</p><h2>This week</h2></div><span class="panel-meta" id="week-total"></span></div><div class="week-chart" id="week-chart" role="img" aria-label="Study minutes planned this week"></div></section>
+            </div>
+            <div class="dashboard-aside"><section class="next-exam-card" id="next-exam-card"></section><section class="panel upcoming-panel"><div class="panel-heading"><div><p class="eyebrow">ON YOUR HORIZON</p><h2>Upcoming exams</h2></div><button class="mini-icon-button" data-action="open-exam-modal" aria-label="Add exam">＋</button></div><div id="upcoming-exams" class="upcoming-list"></div><button class="link-button" data-view-target="exams">See all exams <span>→</span></button></section></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-planner" data-view="planner" aria-labelledby="planner-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">MAKE TIME FOR WHAT MATTERS</p><h1 id="planner-title">Study planner</h1><p class="page-subtitle">A clear next step for every subject, with room to breathe.</p></div><div class="heading-actions"><button class="button button-secondary" data-action="generate-all">↻ Refresh plans</button><button class="button button-primary" data-action="open-exam-modal"><span>＋</span> Add an exam</button></div></div>
+          <div class="planner-toolbar"><div class="filter-tabs" id="planner-filters"><button class="filter-tab is-selected" data-filter="all">All sessions</button><button class="filter-tab" data-filter="planned">To do</button><button class="filter-tab" data-filter="completed">Completed</button></div><label class="select-wrap"><span class="sr-only">Filter by exam</span><select id="exam-filter"><option value="all">All exams</option></select></label></div>
+          <div id="planner-content" class="planner-content"></div>
+        </section>
+
+        <section class="view" id="view-exams" data-view="exams" aria-labelledby="exams-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">THE DATES YOU’RE WORKING TOWARD</p><h1 id="exams-title">My exams</h1><p class="page-subtitle">Keep your subjects and topics in one calm place.</p></div><button class="button button-primary" data-action="open-exam-modal"><span>＋</span> Add an exam</button></div>
+          <div id="exam-grid" class="exam-grid"></div>
+        </section>
+
+        <section class="view" id="view-insights" data-view="insights" aria-labelledby="insights-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">NOTICE HOW FAR YOU’VE COME</p><h1 id="insights-title">Your progress</h1><p class="page-subtitle">Consistency beats cramming. Every completed session counts.</p></div></div>
+          <div class="insights-grid" id="insights-content"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="exam-modal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="exam-modal-title">
+        <div class="modal-heading"><div><p class="eyebrow">START WITH THE BASICS</p><h2 id="exam-modal-title">Add an exam</h2></div><button class="icon-button modal-close" data-action="close-exam-modal" aria-label="Close">×</button></div>
+        <form id="exam-form">
+          <div class="form-grid"><label class="field field-wide"><span>Subject or exam name</span><input name="title" maxlength="60" placeholder="e.g. Data Structures" required /></label><label class="field"><span>Exam date</span><input name="date" type="date" required /></label><label class="field"><span>Daily study goal</span><select name="dailyGoal"><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120" selected>2 hours</option><option value="150">2.5 hours</option><option value="180">3 hours</option></select></label></div>
+          <div class="topic-section-heading"><div><h3>Topics to cover</h3><p>Add a few topics to shape your plan.</p></div><button class="text-button" type="button" data-action="add-topic-row">＋ Add topic</button></div>
+          <div class="topic-fields" id="topic-fields"></div>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <div class="modal-footer"><button class="button button-secondary" type="button" data-action="close-exam-modal">Cancel</button><button class="button button-primary" type="submit">Create study plan <span>→</span></button></div>
+        </form>
+      </section>
+    </div>
+
+    <div class="focus-backdrop" id="focus-overlay" hidden>
+      <section class="focus-card" role="dialog" aria-modal="true" aria-labelledby="focus-title">
+        <button class="icon-button focus-close" data-action="close-focus" aria-label="Close focus session">×</button>
+        <div class="focus-sparkle">✳</div><p class="eyebrow">ONE THING AT A TIME</p><h2 id="focus-title">Your focus session</h2><p id="focus-subtitle" class="focus-subtitle"></p>
+        <div class="timer-ring"><svg viewBox="0 0 220 220" aria-hidden="true"><circle class="timer-track" cx="110" cy="110" r="98"></circle><circle class="timer-progress" id="timer-progress" cx="110" cy="110" r="98"></circle></svg><span id="timer-display">25:00</span></div>
+        <p class="focus-encouragement" id="focus-encouragement">Take a breath. You’re right where you need to be.</p>
+        <div class="focus-actions"><button class="button button-secondary" data-action="toggle-timer" id="timer-toggle">Pause</button><button class="button button-primary" data-action="finish-session">Finish session <span>✓</span></button></div>
+      </section>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
