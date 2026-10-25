@@ -128,7 +128,7 @@ function buildSchedule(exam, completedSessions, occupiedSessions, dailyGoalOverr
     const alreadyDone = Math.min(count, completedCounts[topic.id] || 0);
     for (let index = alreadyDone; index < count; index += 1) {
       const target = count === 1 ? 0 : Math.round(index * (dayCount - 1) / (count - 1));
-      const duration = Math.max(25, Math.min(45, Math.round((Number(topic.estimatedMinutes) / count) / 5) * 5));
+      const duration = Math.max(25, Math.min(60, Math.round((Number(topic.estimatedMinutes) / count) / 5) * 5));
       requests.push({ topic: topic, topicIndex: topicIndex, index: index, count: count, target: target, duration: duration });
     }
   });
