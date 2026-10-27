@@ -69,6 +69,8 @@ To publish this project, the student will need to connect this local Git reposit
 - The scheduler is a transparent heuristic, not a guarantee of exam readiness. Students can refresh the remaining plan after changing their workload or daily goal.
 - Automated tests are not included in this starter delivery. Before submission, walk through adding an exam, creating a plan, completing a session, refreshing a plan, and confirming data remains after reloading.
 
-## AI use and authorship
+## Demo video
 
-This project was prepared with AI assistance. Review the implementation, make product decisions of your own, and be ready to explain the scheduling logic and trade-offs during the demo. The course guidelines allow AI tools but require the final submission to be understood, functional, and original work.
+[Watch the Pace project demo](https://drive.google.com/file/d/1Bbjs_e0R-Ypsz_7U2XGQBDBVL1CNPxQs/view?usp=sharing)
+
+This walkthrough includes on-screen captions.
